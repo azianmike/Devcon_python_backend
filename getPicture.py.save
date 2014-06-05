@@ -1,0 +1,19 @@
+#! /usr/bin/python
+import MySQLdb
+import json
+import collections
+
+def getPicture(decodedData, conn, cursor):
+	location_id = decodedData['location_id']
+	
+	cursor.execute('select url from Picture where location_id = ' + str(location_id))
+	pictureList = cursor.fetchall()
+	objectList = []
+	for row in pictureList:
+		d = collections.OrderedDict()
+		d['url'] = str(row[0])
+		objectList.append(d)
+	temp = collections.OrderedDict()
+        temp['pictures'] = objectList
+        returnData = json.dumps(temp)
+        return returnData
