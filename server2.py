@@ -112,5 +112,8 @@ while 1:
 	client, address = socket.accept()
 	client.settimeout(10)
 	print 'Accepted Connection from ', address
+	#multithreaded connections so multiple connections can be connected at once
+	#look at GIL, multithreading not good on python
+	#do not guarantee this to work
 	thread.start_new_thread(newAcceptedConnection, (client, address))
 shutdownServer(socket)
